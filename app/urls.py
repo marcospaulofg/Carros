@@ -19,9 +19,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from cars.views import view_cars
+from cars.views import view_cars, form_new_car
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("cars/", view_cars, name="lista_carro"),
+    path("new_car/", form_new_car, name="form_new_car"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

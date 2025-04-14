@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+
 {% block content %}
   <style>
     .car-grid {
@@ -97,8 +100,8 @@
   </form>
 
   <div class="car-grid">
-    {% if carrinhos %}
-      {% for cada_carro in carrinhos %}
+    {% if cars %}
+      {% for cada_carro in cars %}
         <div class="car-card">
           <img src="{{ cada_carro.foto.url }}" alt="{{ cada_carro.modelo }} - {{ cada_carro.marca }}">
           <h2>{{ cada_carro.marca }} {{ cada_carro.modelo }}</h2>
