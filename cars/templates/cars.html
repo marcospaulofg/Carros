@@ -101,11 +101,11 @@
 
   <div class="car-grid">
     {% if cars %}
-      {% for cada_carro in cars %}
+      {% for car in cars %}
         <div class="car-card">
-          <img src="{{ cada_carro.foto.url }}" alt="{{ cada_carro.modelo }} - {{ cada_carro.marca }}">
-          <h2>{{ cada_carro.marca }} {{ cada_carro.modelo }}</h2>
-          <p>{{ cada_carro.ano }} - R$ {{ cada_carro.preco }}</p>
+          <img src="{{ car.foto.url }}" alt="{{ car.modelo }} - {{ car.marca }}">
+          <h2>{{ car.marca }} {{ car.modelo }}</h2>
+          <p>{{ car.ano }} - R$ {{ car.preco }}</p>
         </div>
       {% endfor %}
     {% else %}
