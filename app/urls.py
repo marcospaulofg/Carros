@@ -20,11 +20,13 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from cars.views import view_cars, form_new_car
-from accounts.views import view_register
+from accounts.views import view_register, view_login, view_logout
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("cars/", view_cars, name="lista_carro"),
     path("new_car/", form_new_car, name="form_new_car"),
     path("register/", view_register, name='register'),
+    path("login/", view_login, name='login'),
+    path("logout/", view_logout, name='logout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
