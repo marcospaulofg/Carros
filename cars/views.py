@@ -1,28 +1,46 @@
-from django.shortcuts import render, redirect
 from cars.models import Carro
 from cars.forms import CarModelForm
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView 
 
 # Create your views here.
 
-def view_cars(request):
-    search = request.GET.get('search')
-    if search:
-        cars = Carro.objects.filter(modelo__icontains=search).order_by('modelo')
-    else:
-        cars = Carro.objects.all().order_by('modelo')
+class CarListView(ListView):
+    model = Carro
+    template_name = 'cars.html'
+    context_object_name = 'cars'
 
-    return render(request,
-                  'cars.html',
-                  {'cars': cars}
-                  )
+    def get_queryset(self):
+        cars = super().get_queryset().order_by('modelo')
+        search = self.request.GET.get('search')
+        if search:
+            cars = cars.filter(modelo__icontains=search)
+        return cars
 
-def form_new_car(request):
-    if request.method == 'POST':
-        new_car_form = CarModelForm(request.POST, request.FILES)
-        if new_car_form.is_valid():
-            new_car_form.save()
-            return redirect('lista_carro')
-    else:
-        new_car_form = CarModelForm()
-    return render(request, 'new_car.html', { 'new_car_form': new_car_form })
-    
+class CarDetailView(DetailView):
+    model = Carro
+    template_name = 'car_detail.html'
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class NewCarCreateView(CreateView):
+    model = Carro
+    template_name = 'new_car.html'
+    form_class = CarModelForm
+    success_url = '/cars/'
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class CarUpdateView(UpdateView):
+    model = Carro
+    template_name = 'car_update.html'
+    form_class = CarModelForm
+
+    def get_success_url(self):
+        return reverse_lazy('car_detail', kwargs={'pk': self.object.pk})
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class CarDeleteView(DeleteView):
+    model = Carro
+    template_name = 'car_delete.html'
+    success_url = '/cars/'
