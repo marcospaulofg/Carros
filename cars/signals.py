@@ -16,4 +16,4 @@ def car_pre_delete(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=Carro)
 def car_post_delete(sender, instance, **kwargs):
-    print(f"### Post-delete signal triggered for {instance} ###")
+    print(f"### Post-delete signal triggered for {instance} ####")
