@@ -1,19 +1,24 @@
-from django.db.models.signals import pre_save, pre_delete, post_save, post_delete
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
-from cars.models import Carro
+from cars.models import Carro, Inventario
+from django.db.models import Sum
+from deepseek_api.client import get_car_ai_bio
 
 @receiver(pre_save, sender=Carro)
 def car_pre_save(sender, instance, **kwargs):
-    print(f"Pre-save signal triggered for {instance}")
+    if not instance.bio:
+        ai_bio = get_car_ai_bio(instance.modelo, instance.marca, instance.ano)
+        instance.bio = ai_bio
+
+def car_inventory_update():
+    car_count = Carro.objects.all().count()
+    car_value = Carro.objects.aggregate(total_value=Sum('preco'))['total_value']
+    Inventario.objects.create(quantidade=car_count, valor=car_value)
 
 @receiver(post_save, sender=Carro)
 def car_post_save(sender, instance, **kwargs):
-    print(f"Post-save signal triggered for {instance}")
-
-@receiver(pre_delete, sender=Carro)
-def car_pre_delete(sender, instance, **kwargs):
-    print(f"### Pre-delete signal triggered for {instance} ###")
+    car_inventory_update()
 
 @receiver(post_delete, sender=Carro)
 def car_post_delete(sender, instance, **kwargs):
-    print(f"### Post-delete signal triggered for {instance} ####")
+    car_inventory_update()

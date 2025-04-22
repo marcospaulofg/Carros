@@ -86,6 +86,9 @@
       <p><strong>Cor:</strong> {{ object.cor }}</p>
       <p><strong>Quilometragem:</strong> {{ object.km }} km</p>
       <p><strong>Preço:</strong> R$ {{ object.preco }}</p>
+      {% if object.bio %}
+        <p><strong>Bio:</strong> {{ object.bio }}</p>
+      {% endif %}
   </div>
   {% if user.is_authenticated %}
     <div class="buttons-container">
