@@ -1,7 +1,7 @@
 import requests
 
 def get_car_ai_bio(modelo, marca, ano):
-    HUGGINGFACE_API_KEY = "seu_token_aqui"  # Substitua pelo seu token válido
+    HUGGINGFACE_API_KEY = "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"
     API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large"
 
     headers = {

@@ -80,7 +80,11 @@
     }
   </style>
   <div class="car-card">
+    {% if object.foto %}
       <img src="{{ object.foto.url }}" alt="{{ object.modelo }} - {{ object.marca }}">
+    {% else %}
+      <p class="no-photo">Foto não disponível</p>
+    {% endif %}
       <h2>{{ object.marca }} {{ object.modelo }}</h2>
       <p><strong>Ano de fabricação:</strong> {{ object.ano }}</p>
       <p><strong>Cor:</strong> {{ object.cor }}</p>

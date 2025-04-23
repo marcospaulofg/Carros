@@ -2,7 +2,7 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from cars.models import Carro, Inventario
 from django.db.models import Sum
-from deepseek_api.client import get_car_ai_bio
+from ia_api.client import get_car_ai_bio
 
 @receiver(pre_save, sender=Carro)
 def car_pre_save(sender, instance, **kwargs):
