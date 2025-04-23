@@ -27,10 +27,10 @@ class Inventario(models.Model):
     id = models.AutoField(primary_key=True)
     quantidade = models.IntegerField()
     valor = models.FloatField()
-    data_entrada = models.DateTimeField(auto_now_add=True)
+    data = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-data_entrada']
+        ordering = ['-data']
 
     def __str__(self):
         return f"{self.quantidade} - {self.valor}"
