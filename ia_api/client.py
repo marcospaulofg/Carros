@@ -1,8 +1,7 @@
 import requests
 
-
 def get_car_ai_bio(modelo, marca, ano):
-    HUGGINGFACE_API_KEY = "roke_aqui"
+    HUGGINGFACE_API_KEY = "seu_token_aqui"  # Substitua pelo seu token válido
     API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large"
 
     headers = {
@@ -16,10 +15,10 @@ def get_car_ai_bio(modelo, marca, ano):
         "inputs": prompt,
         "parameters": {
             "max_new_tokens": 100,
-            "temperature": 0.7,
+            "temperature": 0.7
         }
     }
-    
+
     try:
         response = requests.post(API_URL, headers=headers, json=payload)
         print(f"[DEBUG] Status code: {response.status_code}")
@@ -30,10 +29,7 @@ def get_car_ai_bio(modelo, marca, ano):
 
         if isinstance(output, list) and "generated_text" in output[0]:
             return output[0]["generated_text"].strip()
-        elif isinstance(output, dict) and "generated_text" in output:
-            return output["generated_text"].strip()
         else:
-            print("[DEBUG] Resposta inesperada da API.")
             return "Descrição não disponível no momento."
 
     except Exception as e:
